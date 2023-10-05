@@ -19,6 +19,10 @@
 <!-- page vendor js file -->
 <script src="<?= base_url('assets'); ?>/vendor/toastr/toastr.js"></script>
 
+<script src="<?= base_url('assets'); ?>/bundles/libscripts.bundle.js"></script>
+    <script src="<?= base_url('assets'); ?>/bundles/vendorscripts.bundle.js"></script>
+    <script src="<?= base_url('assets'); ?>/bundles/c3.bundle.js"></script>
+
 <script src="<?= base_url('assets'); ?>/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script> Bootstrap Colorpicker Js 
 <script src="<?= base_url('assets'); ?>/vendor/jquery-inputmask/jquery.inputmask.bundle.js"></script>
 <script src="<?= base_url('assets'); ?>/vendor/jquery.maskedinput/jquery.maskedinput.min.js"></script>
@@ -29,8 +33,8 @@
 <!-- page js file -->
 <script src="<?= base_url('assets'); ?>/vendor/nouislider/nouislider.js"></script>
 <script src="<?= base_url('assets'); ?>/bundles/mainscripts.bundle.js"></script>
-<script src="<?= base_url('assets'); ?>/js/index.js"></script>
 <script src="<?= base_url('assets'); ?>/js/advanced-form-elements.js"></script>
+<script src="<?= base_url('assets'); ?>/js/index.js"></script>
 
 <script>
     // $('#data-1-1').text('1')

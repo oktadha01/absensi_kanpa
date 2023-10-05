@@ -22,8 +22,8 @@
     <!-- MAIN Project CSS file -->
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/custom.css">
     <link rel="stylesheet" href="<?= base_url('assets'); ?>/css/main.css">
-    <script src="<?= base_url('assets'); ?>/bundles/libscripts.bundle.js"></script>
+    <!-- <script src="<?= base_url('assets'); ?>/bundles/libscripts.bundle.js"></script>
     <script src="<?= base_url('assets'); ?>/bundles/vendorscripts.bundle.js"></script>
-    <script src="<?= base_url('assets'); ?>/bundles/c3.bundle.js"></script>
+    <script src="<?= base_url('assets'); ?>/bundles/c3.bundle.js"></script> -->
 
 </head>
