@@ -61,16 +61,9 @@
                         <li class="menu">
                             <a href="<?= site_url('Karyawan'); ?>" class=""><i class="fa fa-dashboard"></i><span>Karyawan</span></a>
                         </li>
-                        <?php
-                        if ($this->session->userdata('userdata')->nama == 'Founder') {
-                        ?>
-                        <?php } else { ?>
-                            <li class="menu">
-                                <a href="<?= site_url('Izin'); ?>" class=""><i class="fa fa-dashboard"></i><span>Izin</span></a>
-
-                            </li>
-                        <?php } ?>
-
+                        <li class="menu">
+                            <a href="<?= site_url('Izin'); ?>" class=""><i class="fa fa-dashboard"></i><span>Izin</span></a>
+                        </li>
                     </ul>
                 </nav>
             </div>
