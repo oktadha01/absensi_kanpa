@@ -84,7 +84,6 @@ class Dashboard extends CI_Controller
                         } else {
                             echo '<td class="text-center font-weight-bold" id="data-' . $kar->code_karyawan . '-' . ltrim($x, '0') . '"></td>';
                         }
-            
                     }
                     echo '</tr>';
                 }
@@ -170,6 +169,15 @@ class Dashboard extends CI_Controller
                         $absen   = explode('-', $tgl_absen);
                         echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir").text("MANGKIR");';
                     } else {
+                        $tgl_izin = $rows->tgl_izin;
+                        $izin   = explode('-', $tgl_izin);
+                        if ($rows->status_izin == 'izin') {
+                            echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
+                        } else if ($rows->status_izin == 'luar kota') {
+                            echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
+                        } else if ($rows->status_izin == 'telat') {
+                            echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
+                        }
                     }
                 } else if ($rows->jam_masuk >= '08:15') {
                     $tgl_absen = $rows->tgl_absen;
@@ -195,62 +203,71 @@ class Dashboard extends CI_Controller
             // echo '<br>';
         };
         echo '</script>';
-        $izin123 = "(SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code 
-                    FROM tb_absen LEFT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen 
-                    WHERE MONTH(STR_TO_DATE(tb_absen.tgl_absen, '%d-%m-%Y')) = $bulan)
-                    UNION
-                    (SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code  
-                    FROM tb_absen RIGHT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen 
-                    WHERE MONTH(STR_TO_DATE(tb_izin.tgl_izin, '%d-%m-%Y')) = $bulan)";
-        $query = $this->db->query($izin123);
-        foreach ($query->result() as $rows) {
-            // echo $rows->id_absen;
-            // echo $rows->code_karyawan;
-            if ($rows->code_kar_absen == $rows->code) {
-                $no = 1;
-                // $tanggal = '1-09-2023';
-                $tgl_izin = $rows->tgl_izin;
-                $izin   = explode('-', $tgl_izin);
-                // echo 'yaa';
-                if ($rows->status_izin == 'izin') {
-                    echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
-                } else if ($rows->status_izin == 'luar kota') {
-                    echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
-                } else if ($rows->status_izin == 'telat') {
-                    echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
-                }
-            } else {
-                if ($rows->jam_masuk == '') {
-                    // echo 'aaa';
-                    if ($rows->code == is_null('')) {
-                        $tgl_absen = $rows->tgl_absen;
-                        $absen   = explode('-', $tgl_absen);
-                        echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir").text("MANGKIR");';
-                    } else {
-                    }
-                } else if ($rows->jam_masuk >= '08:15') {
-                    $tgl_absen = $rows->tgl_absen;
-                    $absen   = explode('-', $tgl_absen);
-                    echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-telat").html("' . $rows->jam_masuk . '<br>' . $rows->status_izin . '");';
-                } else if ($rows->jam_masuk == is_null('')) {
-                    $tgl_izin = $rows->tgl_izin;
-                    $izin   = explode('-', $tgl_izin);
-                    if ($rows->status_izin == 'izin') {
-                        echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
-                    } else if ($rows->status_izin == 'luar kota') {
-                        echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
-                    } else if ($rows->status_izin == 'telat') {
-                        echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
-                    }
-                    // echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-mangkir").text("MANGKIR");';
-                } else {
-                    $tgl_absen = $rows->tgl_absen;
-                    $absen   = explode('-', $tgl_absen);
-                    echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-hadir").html("' . $rows->jam_masuk . '<br>' . $rows->jam_keluar . '");';
-                }
-            }
-            echo '<br>';
-        };
+        // $izin123 = "(SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code 
+        //             FROM tb_absen LEFT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen 
+        //             WHERE MONTH(STR_TO_DATE(tb_absen.tgl_absen, '%d-%m-%Y')) = $bulan)
+        //             UNION
+        //             (SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code  
+        //             FROM tb_absen RIGHT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen 
+        //             WHERE MONTH(STR_TO_DATE(tb_izin.tgl_izin, '%d-%m-%Y')) = $bulan)";
+        // $query = $this->db->query($izin123);
+        // foreach ($query->result() as $rows) {
+        //     // echo $rows->id_absen;
+        //     // echo $rows->code_karyawan;
+        //     if ($rows->code_kar_absen == $rows->code) {
+        //         $no = 1;
+        //         // $tanggal = '1-09-2023';
+        //         $tgl_izin = $rows->tgl_izin;
+        //         $izin   = explode('-', $tgl_izin);
+        //         // echo 'yaa';
+        //         if ($rows->status_izin == 'izin') {
+        //             echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
+        //         } else if ($rows->status_izin == 'luar kota') {
+        //             echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
+        //         } else if ($rows->status_izin == 'telat') {
+        //             echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
+        //         }
+        //     } else {
+        //         if ($rows->jam_masuk == '') {
+        //             // echo 'aaa';
+        //             if ($rows->code == is_null('')) {
+        //                 $tgl_absen = $rows->tgl_absen;
+        //                 $absen   = explode('-', $tgl_absen);
+        //                 echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir").text("MANGKIR");';
+        //             } else {
+        //                 $tgl_izin = $rows->tgl_izin;
+        //                 $izin   = explode('-', $tgl_izin);
+        //                 if ($rows->status_izin == 'izin') {
+        //                     echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
+        //                 } else if ($rows->status_izin == 'luar kota') {
+        //                     echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
+        //                 } else if ($rows->status_izin == 'telat') {
+        //                     echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
+        //                 }
+        //             }
+        //         } else if ($rows->jam_masuk >= '08:15') {
+        //             $tgl_absen = $rows->tgl_absen;
+        //             $absen   = explode('-', $tgl_absen);
+        //             echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-telat").html("' . $rows->jam_masuk . '<br>' . $rows->status_izin . '");';
+        //         } else if ($rows->jam_masuk == is_null('')) {
+        //             $tgl_izin = $rows->tgl_izin;
+        //             $izin   = explode('-', $tgl_izin);
+        //             if ($rows->status_izin == 'izin') {
+        //                 echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
+        //             } else if ($rows->status_izin == 'luar kota') {
+        //                 echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
+        //             } else if ($rows->status_izin == 'telat') {
+        //                 echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
+        //             }
+        //             // echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-mangkir").text("MANGKIR");';
+        //         } else {
+        //             $tgl_absen = $rows->tgl_absen;
+        //             $absen   = explode('-', $tgl_absen);
+        //             echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-hadir").html("' . $rows->jam_masuk . '<br>' . $rows->jam_keluar . '");';
+        //         }
+        //     }
+        //     echo '<br>';
+        // };
 
         //     $izin123 = "(SELECT tb_absen.id_absen, tb_izin.status_izin, tb_absen.code_karyawan, tb_izin.code_karyawan as code FROM tb_absen LEFT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen)
         //     UNION

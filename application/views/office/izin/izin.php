@@ -1,37 +1,48 @@
 <div class="row mt-3">
     <div class="col">
         <div class="card">
-            <div class="row">
-                <div class="col-lg-4 col-md-12">
-                    <label>Filter Enabled</label>
-                    <div class="c_multiselect">
-                        <select id="multiselect4-filter" name="multiselect4[]" class="multiselect multiselect-custom" multiple="multiple" style="display: none;">
-                            <option value="bootstrap">Bootstrap</option>
-                            <option value="bootstrap-marketplace">Bootstrap Marketplace</option>
-                            <option value="bootstrap-theme">Bootstrap Theme</option>
-                            <option value="html">HTML</option>
-                            <option value="html-template">HTML Template</option>
-                            <option value="wp-marketplace">WordPress Marketplace</option>
-                            <option value="wp-plugin">WordPress Plugin</option>
-                            <option value="wp-theme">WordPress Theme</option>
+            <div id="form-input-izin" class="body" hidden>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <label>karyawan</label>
+                        <select id="code-karyawan" class="js-states form-control">
+                            <option>Pilih karyawan</option>
+                            <?php
+                            foreach ($karyawan as $data) :
+                            ?>
+                                <option value="<?= $data->code_karyawan; ?>"><?= $data->nama; ?></option>
+                            <?php endforeach; ?>
                         </select>
-                        <div class="btn-group"><button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="None selected" aria-expanded="false"><span class="multiselect-selected-text">None selected</span> <b class="caret"></b></button>
-                            <ul class="multiselect-container dropdown-menu" style="max-height: 200px; overflow: hidden auto;">
-                                <li class="multiselect-item filter" value="0">
-                                    <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span><input class="form-control multiselect-search" type="text" placeholder="Search"><span class="input-group-btn"><button class="btn btn-default multiselect-clear-filter" type="button"><i class="glyphicon glyphicon-remove-circle"></i></button></span></div>
-                                </li>
-                                <li class=""><a tabindex="0"><label class="checkbox"><input type="checkbox" value="bootstrap"> Bootstrap</label></a></li>
-                                <li class=""><a tabindex="0"><label class="checkbox"><input type="checkbox" value="bootstrap-marketplace"> Bootstrap Marketplace</label></a></li>
-                                <li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="bootstrap-theme"> Bootstrap Theme</label></a></li>
-                                <li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="html"> HTML</label></a></li>
-                                <li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="html-template"> HTML Template</label></a></li>
-                                <li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="wp-marketplace"> WordPress Marketplace</label></a></li>
-                                <li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="wp-plugin"> WordPress Plugin</label></a></li>
-                                <li><a tabindex="0"><label class="checkbox"><input type="checkbox" value="wp-theme"> WordPress Theme</label></a></li>
-                            </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <label>karyawan</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                <input type="text" id="tgl-izin" class="form-contro" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
                         </div>
                     </div>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <label>Status</label>
+                        <select id="status-izin" class="js-states form-control">
+                            <option>Pilih status</option>
+                            <option value="izin">Izin</option>
+                            <option value="sakit">Sakit</option>
+                            <option value="telat">Telat</option>
+                            <option value="luar kota">Luar kota</option>
+                        </select>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="submit" id="btn-batal-izin" class="btn btn-danger">Batal</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" id="btn-simpan-izin" class="btn btn-success" style="float: right;">Simpan</button>
+                    </div>
+                </div>
+                <hr>
             </div>
             <div class="header">
                 <div class="row">
@@ -39,8 +50,26 @@
                         <h2>Data izin karyawan</h2>
                     </div>
                     <div class="col">
-                        <button type="submit" class="btn btn-primary" style="float: right;">Validate</button>
+                        <button type="submit" id="btn-tambah-izin" class="btn btn-primary" style="float: right;">Tambah izin</button>
                     </div>
+                </div>
+            </div>
+            <div class="body mb-0 mt-0">
+                <div class="c_multiselect">
+                    <select id="single-selection" name="single_selection" class="multiselect multiselect-custom filter-bulan">
+                        <option value="1">JANUARI</option>
+                        <option value="2">FEBUARI</option>
+                        <option value="3">MARET</option>
+                        <option value="4">APRIL</option>
+                        <option value="5">MEI</option>
+                        <option value="6">JUNI</option>
+                        <option value="7">JULI</option>
+                        <option value="8">AGUSTUS</option>
+                        <option value="9">SEPTEMBER</option>
+                        <option value="10">OKTOBER</option>
+                        <option value="11">NOVEMBER</option>
+                        <option value="12">DESEMBER</option>
+                    </select>
                 </div>
             </div>
             <div class="body">
@@ -52,22 +81,12 @@
                                 <th>Nama</th>
                                 <th>Tanggal</th>
                                 <th>Status</th>
+                                <th class="text-center">Action</th>
                             </tr>
 
                         </thead>
-                        <tbody>
-                            <?php
-                            $no = 1;
-                            foreach ($karyawan as $data) :
-                            ?>
-                                <tr>
-                                    <td><?= $no++; ?></td>
-                                    <td><?= $data->nama; ?></td>
-                                    <td><?= $data->tgl_izin; ?></td>
-                                    <td><?= $data->status_izin; ?></td>
-                                </tr>
-                            <?php
-                            endforeach; ?>
+                        <tbody id="data-izin">
+
                         </tbody>
                     </table>
                 </div>

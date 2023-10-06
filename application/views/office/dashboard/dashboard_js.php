@@ -1,14 +1,22 @@
 <script>
+    $('.jumping-dots-loader').hide();
     $(document).ready(function() {
+        var delayInMilliseconds = 1500; //1 second
+        $('.jumping-dots-loader').show();
         load_tabel_absen();
-        load_data_absen();
+
+        setTimeout(function() {
+            //your code to be executed after 1 second
+            // alert('yaa')
+            load_data_absen();
+            $('.jumping-dots-loader').hide();
+        }, delayInMilliseconds);
     });
     <?php
     $tgl = date("d-m-Y");
     $fillter = explode('-', $tgl);
     ?>
     $('#single-selection').val('<?= ltrim($fillter[1], "0"); ?>');
-    $('.jumping-dots-loader').hide();
     $('#single-selection').change(function() {
         var bulan = $(this).val();
         // $('#single-selectios').val(bulan);
@@ -16,7 +24,7 @@
         var delayInMilliseconds = 1500; //1 second
         $('.jumping-dots-loader').show();
         load_tabel_absen();
-        
+
         setTimeout(function() {
             //your code to be executed after 1 second
             // alert('yaa')

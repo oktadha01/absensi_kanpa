@@ -91,3 +91,7 @@ tbody th {
 	}
 }
 
+.c_multiselect
+.dropdown-menu {
+	z-index: 9999;
+}
