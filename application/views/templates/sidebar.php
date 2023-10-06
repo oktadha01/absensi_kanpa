@@ -47,9 +47,9 @@
             <div class="tab-pane active" id="menu">
                 <nav id="left-sidebar-nav" class="sidebar-nav">
                     <ul id="main-menu" class="metismenu li_animation_delay">
-                        <li class="menu">
-                            <a href="#Dashboard" class=""><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
-                        </li>
+                        <!-- <li class="menu">
+                            <a href="<?= site_url('dashboard'); ?>" class=""><i class="fa fa-dashboard"></i><span>Dashboard</span></a>
+                        </li> -->
                         <li class="menu">
                             <a href="<?= site_url('dashboard'); ?>" class=""><i class="fa fa-dashboard"></i><span>Absensi</span></a>
 
