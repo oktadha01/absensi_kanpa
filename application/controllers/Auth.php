@@ -20,7 +20,7 @@ class Auth extends CI_Controller
 		$session = $this->session->userdata('status');
 
 		if ($session == '') {
-			$this->load->view('page/login');
+			$this->load->view('office/login/login');
 		} else {
 			redirect('Dashboard');
 		}
@@ -110,6 +110,6 @@ class Auth extends CI_Controller
 	// }
 }
 
-	
+
 /* End of file Login.php */
 /* Location: ./application/controllers/Login.php */
