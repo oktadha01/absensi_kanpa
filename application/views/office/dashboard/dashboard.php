@@ -28,6 +28,10 @@
         background: #ff5722;
         border: 1px solid #aaaaaa;
     }
+    .td-libur {
+        background: darkgray;
+        border: 1px solid #aaaaaa;
+    }
 
     .loader-demo-box {
         border-radius: 0.25rem !important;

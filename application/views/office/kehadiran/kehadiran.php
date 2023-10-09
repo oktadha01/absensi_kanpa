@@ -1,3 +1,66 @@
+<style>
+    .loader-demo-box {
+        border-radius: 0.25rem !important;
+    }
+
+    .loader-demo-box {
+        width: 100%;
+        height: 200px;
+    }
+
+    .jumping-dots-loader {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        /* position: relative; */
+        margin: 0 auto;
+
+        position: absolute;
+        top: 27%;
+        z-index: 99999;
+        left: 36%;
+    }
+
+    .jumping-dots-loader span {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        background-color: rgba(241, 83, 110, 0.8);
+        margin: 35px 5px;
+    }
+
+    .jumping-dots-loader span:nth-child(1) {
+        animation: bounce 1s ease-in-out infinite;
+    }
+
+    .jumping-dots-loader span:nth-child(2) {
+        animation: bounce 1s ease-in-out 0.33s infinite;
+    }
+
+    .jumping-dots-loader span:nth-child(3) {
+        animation: bounce 1s ease-in-out 0.66s infinite;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        75%,
+        100% {
+            -webkit-transform: translateY(0);
+            -ms-transform: translateY(0);
+            -o-transform: translateY(0);
+            transform: translateY(0);
+        }
+
+        25% {
+            -webkit-transform: translateY(-20px);
+            -ms-transform: translateY(-20px);
+            -o-transform: translateY(-20px);
+            transform: translateY(-20px);
+        }
+    }
+</style>
 <div class="row mt-3">
     <div class="col">
         <label>ABSENSI BULAN</label>
@@ -40,21 +103,7 @@
             </table>
         </div>
     </div>
-    <?php
-    // $waktu_awal        = strtotime("08:00");
-    // $waktu_akhir    = strtotime("08:20"); // bisa juga waktu sekarang now()
-
-    // //menghitung selisih dengan hasil detik
-    // $diff    = $waktu_akhir - $waktu_awal;
-
-    // //membagi detik menjadi jam
-    // $jam    = floor($diff / (60 * 60));
-
-    // //membagi sisa detik setelah dikurangi $jam menjadi menit
-    // $menit    = $diff - $jam * (60 * 60);
-
-    // //menampilkan / print hasil
-    // // echo 'Hasilnya adalah ' . number_format($diff, 0, ",", ".") . ' detik<br /><br />';
-    // echo 'Sehingga Anda memiliki sisa waktu promosi selama: ' . $jam .  ' jam dan ' . floor($menit / 60 + 15) . ' menit';
-    ?>
 </main>
+<div id="load-script"></div>
+<div class="jumping-dots-loader"> <span></span> <span></span> <span></span> </div>
+<div class="moving-gradient"></div>

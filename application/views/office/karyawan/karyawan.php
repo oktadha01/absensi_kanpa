@@ -2,7 +2,7 @@
     <div class="col">
         <div class="card">
             <div class="header">
-                <h2></h2>
+                <h2>Data Karyawan</h2>
             </div>
             <div class="body">
                 <div class="table-responsive">
@@ -14,8 +14,8 @@
                                 <th colspan="2" class="text-center">Hari Kerja</th>
                             </tr>
                             <tr>
+                                <th class="text-center">5 Hari</th>
                                 <th class="text-center">6 Hari</th>
-                                <th class="text-center">7 Hari</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,7 +38,7 @@
                                                 <center>
                                                     <div class="form-group">
                                                         <label class="fancy-checkbox">
-                                                            <input type="checkbox" name="checkbox" id="h-6-<?= $row->code_karyawan; ?>" class="ceklis-hari hari-<?= $row->code_karyawan; ?>" data-code-kar="<?= $row->code_karyawan; ?>" required="" value="6">
+                                                            <input type="checkbox" name="checkbox" id="h-5-<?= $row->code_karyawan; ?>" class="ceklis-hari hari-<?= $row->code_karyawan; ?>" data-code-kar="<?= $row->code_karyawan; ?>" required="" value="5">
                                                             <span></span>
                                                         </label>
                                                     </div>
@@ -48,7 +48,7 @@
                                                 <center>
                                                     <div class="form-group">
                                                         <label class="fancy-checkbox">
-                                                            <input type="checkbox" name="checkbox" id="h-7-<?= $row->code_karyawan; ?>" class="ceklis-hari hari-<?= $row->code_karyawan; ?>" data-code-kar="<?= $row->code_karyawan; ?>" required="" value="7">
+                                                            <input type="checkbox" name="checkbox" id="h-6-<?= $row->code_karyawan; ?>" class="ceklis-hari hari-<?= $row->code_karyawan; ?>" data-code-kar="<?= $row->code_karyawan; ?>" required="" value="6">
                                                             <span></span>
                                                         </label>
 

@@ -30,14 +30,14 @@ class Kehadiran extends CI_Controller
 
     function data_kehadiran()
     {
-        
-        // $bulan = '9';
+
+        // $bulan = '10';
         $bulan = $this->input->post('bulan');
 
         $data['dept']        = $this->M_dashboard->m_dept();
         $data['karyawan']        = $this->M_kehadiran->m_karyawan();
         // $data['absen']        = $this->M_kehadiran->m_absen();
-        $data['hadir']        = $this->M_kehadiran->m_hadir($bulan);
+        $hadir        = $this->M_kehadiran->m_hadir($bulan);
         $luar_kota        = $this->M_kehadiran->m_luar_kota($bulan);
         $izin        = $this->M_kehadiran->m_izin($bulan);
         $mangkir        = $this->M_kehadiran->m_mangkir($bulan);
@@ -57,60 +57,57 @@ class Kehadiran extends CI_Controller
                     echo '     <th>' . $no++ . '</th>';
                     echo '     <th>' . $rows->nama . '</th>';
 
-                    foreach ($data['hadir'] as $hdr) {
-                        if ($rows->code_karyawan == $hdr->code_kar) {
-                            echo '     <td>' . $hdr->jumlah . '</td>';
-                        }
-                    }
+                    // foreach ($data['hadir'] as $hdr) {
+                    //     if ($rows->code_karyawan == $hdr->code_kar) {
+                    //         echo '     <td>' . $hdr->jumlah . '</td>';
+                    //     }
+                    // }
+                    echo '<td class="text-center">';
+                    $num_rows_hadir = $hadir['num_rows'];
+                    if ($num_rows_hadir > 0) {
 
+                        foreach ($hadir['result'] as $data_hadir) {
+                            if ($rows->code_karyawan == $data_hadir->code_kar) {
+                                echo  $data_hadir->jumlah;
+                            } 
+                        }
+                    } 
+                    echo '</td>';
+                    echo '<td class="text-center">';
                     $num_rows_luarkota = $luar_kota['num_rows'];
                     if ($num_rows_luarkota > 0) {
 
                         foreach ($luar_kota['result'] as $data_luarkota) {
                             if ($rows->code_karyawan == $data_luarkota->code_kar) {
-                                echo '     <td>' . $data_luarkota->jumlah . '</td>';
-                            } else {
-
-                                echo '     <td>0</td>';
-                            }
+                                echo  $data_luarkota->jumlah . '</td>';
+                            } 
                         }
-                    } else {
-                        echo '     <td>' . $num_rows_luarkota . '</td>';
-                    }
+                    } 
+                    echo '</td>';
+                    echo '<td class="text-center">';
 
                     $num_rows_izin = $izin['num_rows'];
                     if ($num_rows_izin > 0) {
 
                         foreach ($izin['result'] as $data_izin) {
                             if ($rows->code_karyawan == $data_izin->code_kar) {
-                                echo '     <td>' . $data_izin->jumlah . '</td>';
-                            } else {
-
-                                echo '     <td>0</td>';
+                                echo  $data_izin->jumlah;
                             }
                         }
-                    } else {
-                        echo '     <td>' . $num_rows_izin . '</td>';
                     }
+                    echo '</td>';
+                    echo '<td class="text-center">';
 
                     $num_rows_mangkir = $mangkir['num_rows'];
                     if ($num_rows_mangkir > 0) {
 
                         foreach ($mangkir['result'] as $data_mangkir) {
                             if ($rows->code_karyawan == $data_mangkir->code_kar) {
-                                echo '     <td>' . $data_mangkir->jumlah . '</td>';
-                                // if ($data_mangkir->izin == 'izin') {
-                                // } else {
-                                //     echo '     <td>'.$data_mangkir->izin.'</td>';
-                                // }
-                            } else {
-
-                                echo '     <td>0</td>';
+                                echo $data_mangkir->jumlah;
                             }
                         }
-                    } else {
-                        echo '     <td>' . $num_rows_mangkir . '</td>';
-                    }
+                    } 
+                    echo '</td>';
 
                     $num_rows_telat = $telat['num_rows'];
 
@@ -135,7 +132,7 @@ class Kehadiran extends CI_Controller
                                 $subtelat = $total += $diff;
                                 $total_telat = $subtelat - $jam * (60 * 60);
 
-                                // echo '<td>' . $diff .  ' jam dan ' . floor($menit / 60) . ' menit</td>';
+                                // echo '<td class="text-center">' . $diff .  ' jam dan ' . floor($menit / 60) . ' menit</td>';
                                 //menampilkan / print hasil
                                 // echo 'Hasilnya adalah ' . number_format($diff, 0, ",", ".") . ' detik<br /><br />';
                                 // echo 'Sehingga Anda memiliki sisa waktu promosi selama: ' . $jam .  ' jam dan ' . floor($menit / 60 + 15) . ' menit';
@@ -153,7 +150,7 @@ class Kehadiran extends CI_Controller
                         echo '     <td>' .  floor($total_telat / 60) . ' Menit</td>';
                     } else {
 
-                        echo '     <td>0 Menit</td>';
+                        echo '     <td></td>';
                     }
                     echo ' </tr>';
                 }
