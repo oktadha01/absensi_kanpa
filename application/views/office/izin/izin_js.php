@@ -127,7 +127,7 @@
             showDropdowns: true,
             minYear: 1901,
             locale: {
-                format: 'DD-MM- YYYY'
+                format: 'DD-MM-YYYY'
             }
 
         });
