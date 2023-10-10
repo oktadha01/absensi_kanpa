@@ -172,8 +172,16 @@ class Dashboard extends CI_Controller
                 $tgl_absen = $rows->tgl_absen;
                 $absen   = explode('-', $tgl_absen);
                 if ($rows->jam_masuk >= '08:15') {
+                    if ($rows->status_izin == 'izin') {
+                        echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
+                    } else if ($rows->status_izin == 'luar kota') {
+                        echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
+                    } else if ($rows->status_izin == 'telat') {
+                        echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
+                    }else{
+                        echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-telat ").html("' . $rows->jam_masuk . '<br>' . $rows->jam_keluar . '");';
 
-                    echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-telat ").html("' . $rows->jam_masuk . '<br>' . $rows->jam_keluar . '");';
+                    }
                 } else {
 
                     echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-hadir ").html("' . $rows->jam_masuk . '<br>' . $rows->jam_keluar . '");';
