@@ -1,7 +1,7 @@
 .primary {
 	overflow: auto;
 	scroll-snap-type: both mandatory;
-	/* height: 80vh; */
+	height: 80vh;
 }
 
 @media (min-width: 40em) {
