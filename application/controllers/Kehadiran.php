@@ -65,13 +65,20 @@ class Kehadiran extends CI_Controller
                     echo '<td class="text-center">';
                     $num_rows_hadir = $hadir['num_rows'];
                     if ($num_rows_hadir > 0) {
-
                         foreach ($hadir['result'] as $data_hadir) {
                             if ($rows->code_karyawan == $data_hadir->code_kar) {
-                                echo  $data_hadir->jumlah;
-                            } 
+                                $num_rows_mangkir = $mangkir['num_rows'];
+                                if ($num_rows_mangkir > 0) {
+                                    foreach ($mangkir['result'] as $data_mangkir) {
+                                        if ($data_mangkir->code_kar == $data_hadir->code_kar) {
+                                            // echo $data_mangkir->jumlah;
+                                            echo ($data_hadir->jumlah -= $data_mangkir->jumlah);
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    } 
+                    }
                     echo '</td>';
                     echo '<td class="text-center">';
                     $num_rows_luarkota = $luar_kota['num_rows'];
@@ -80,9 +87,9 @@ class Kehadiran extends CI_Controller
                         foreach ($luar_kota['result'] as $data_luarkota) {
                             if ($rows->code_karyawan == $data_luarkota->code_kar) {
                                 echo  $data_luarkota->jumlah . '</td>';
-                            } 
+                            }
                         }
-                    } 
+                    }
                     echo '</td>';
                     echo '<td class="text-center">';
 
@@ -106,7 +113,7 @@ class Kehadiran extends CI_Controller
                                 echo $data_mangkir->jumlah;
                             }
                         }
-                    } 
+                    }
                     echo '</td>';
 
                     $num_rows_telat = $telat['num_rows'];
