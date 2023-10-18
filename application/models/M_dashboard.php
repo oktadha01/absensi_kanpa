@@ -47,4 +47,10 @@ class M_dashboard extends CI_Model
         return $query->result();
         
     }
+    function m_update_status_absen($id_absen,$status_absen){
+        $update = $this->db->set('status_absen', $status_absen)
+        ->where('id_absen', $id_absen)
+        ->update('tb_absen');
+    return $update;
+    }
 }

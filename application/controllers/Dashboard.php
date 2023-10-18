@@ -133,12 +133,12 @@ class Dashboard extends CI_Controller
             '12' => 'December',
         ];
 
-        $izin123 = "(SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code, karyawan.code_karyawan AS code_kary, karyawan.hari_kerja 
+        $izin123 = "(SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code, karyawan.code_karyawan AS code_kary, karyawan.hari_kerja, karyawan.dept 
                     FROM tb_absen LEFT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen
                     JOIN karyawan ON karyawan.code_karyawan = tb_absen.code_karyawan 
                     WHERE MONTH(STR_TO_DATE(tb_absen.tgl_absen, '%d-%m-%Y')) = $bulan)
                     UNION
-                    (SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code, karyawan.code_karyawan AS code_kary, karyawan.hari_kerja  
+                    (SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code, karyawan.code_karyawan AS code_kary, karyawan.hari_kerja, karyawan.dept  
                     FROM tb_absen RIGHT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen
                     JOIN karyawan ON karyawan.code_karyawan = tb_izin.code_karyawan 
                     WHERE MONTH(STR_TO_DATE(tb_izin.tgl_izin, '%d-%m-%Y')) = $bulan)";
@@ -162,10 +162,31 @@ class Dashboard extends CI_Controller
                         if ($rows->hari_kerja == '5') {
                             echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-libur ").text("");';
                         } else {
-                            echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir ").text("MANGKIR");';
+                            if($rows->dept=='founder'){
+
+                            }else{
+                                if ($rows->status_absen == 'libur') {
+    
+                                    echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("").attr("data-id-absen","' . $rows->id_absen . '");';
+                                } else {
+    
+                                    echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("MANGKIR").attr("data-id-absen","' . $rows->id_absen . '");';
+                                }
+                            }
                         }
                     } else {
-                        echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir ").text("MANGKIR");';
+                        if($rows->dept=='founder'){
+
+                        }else{
+
+                            if ($rows->status_absen == 'libur') {
+    
+                                echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("").attr("data-id-absen","' . $rows->id_absen . '").attr("data-status-absen","' . $rows->status_absen . '");';
+                            } else {
+    
+                                echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("MANGKIR").attr("data-id-absen","' . $rows->id_absen . '").attr("data-status-absen","' . $rows->status_absen . '");';
+                            }
+                        }
                     }
                 }
             } else {
@@ -178,9 +199,8 @@ class Dashboard extends CI_Controller
                         echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
                     } else if ($rows->status_izin == 'telat') {
                         echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
-                    }else{
+                    } else {
                         echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-telat ").html("' . $rows->jam_masuk . '<br>' . $rows->jam_keluar . '");';
-
                     }
                 } else {
 
@@ -190,5 +210,51 @@ class Dashboard extends CI_Controller
             // echo '<br>';
         };
         echo '</script>';
+        echo '<script>';
+        echo '$(".tb-absen").click(function(){
+            // alert($(this).data("status-absen"));  
+            var id_absen = $(this).data("id-absen");
+            if($(this).data("status-absen") == "libur"){
+                var confirmalert = confirm("Apakah anda ingin merubah status menjadi mangkir ?");
+            }else{
+                var confirmalert = confirm("Apakah anda ingin merubah status menjadi libur ?");
+            } 
+            if (confirmalert == true) {
+                if($(this).data("status-absen")=="libur"){
+                    $(this).removeClass("libur").data("status-absen","").text("MANGKIR");
+                    var status_absen = "";
+                }else{
+                    $(this).addClass("libur").data("status-absen","libur").text("");
+                    var status_absen = "libur";
+                    
+                }
+                let formData = new FormData();
+                formData.append("id-absen", id_absen)
+                formData.append("status-absen", status_absen)
+                $.ajax({
+                    type: "POST",
+                    url: "' . site_url("Dashboard/update_status_absen") . '",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        alert("Berhasil");
+                        // load_data_izin();
+                    },
+                    error: function() {
+                        alert("Data Gagal Diupload");
+                    }
+                });
+            }
+
+        })';
+        echo '</script>';
+    }
+    function update_status_absen(){
+        $id_absen = $this->input->post('id-absen');
+        $status_absen = $this->input->post('status-absen');
+        $update = $this->M_dashboard->m_update_status_absen($id_absen,$status_absen);
+        echo json_encode($update);
     }
 }

@@ -1,33 +1,35 @@
 <style>
     .td-hadir {
         background: #86abcf;
-        border: 1px solid #aaaaaa;
+        border: 1px solid white;
     }
 
     .td-telat {
         background: #FFEB3B;
-        border: 1px solid #aaaaaa;
+        border: 1px solid white;
     }
 
     .td-izin {
         background: #F39F5A;
-        border: 1px solid #aaaaaa;
+        border: 1px solid white;
     }
 
     .td-luar-kota {
         background: #CDDC39;
-        border: 1px solid #aaaaaa;
+        border: 1px solid white;
     }
 
     .td-none {
         background: #5775ad;
-        border: 1px solid #aaaaaa;
+        border: 1px solid white;
     }
 
     .td-mangkir {
         background: #ff5722;
-        border: 1px solid #aaaaaa;
+        border: 1px solid white;
     }
+
+    .libur,
     .td-libur {
         background: darkgray;
         border: 1px solid #aaaaaa;
@@ -126,4 +128,22 @@
 <div id="load-script"></div>
 <div class="jumping-dots-loader"> <span></span> <span></span> <span></span> </div>
 <div class="moving-gradient"></div>
-
+<a href="#smallModal" data-toggle="modal" data-target="#smallModal">
+    <img class="img-thumbnail img-fluid" src="assets/images/model3.jpg" alt="User">
+</a>
+<div class="modal fade" id="smallModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="title" id="smallModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
+                vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
+                Fusce pulvinar libero vel ligula iaculis ullamcorper. </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">SAVE CHANGES</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
