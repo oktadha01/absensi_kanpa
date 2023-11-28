@@ -91,9 +91,11 @@
                         <th class="pin">NO</th>
                         <th class="pin">NAMA</th>
                         <th>HADIR</th>
-                        <th>LUAR KOTA</th>
+                        <!-- <th>LUAR KOTA</th> -->
                         <th>IZIN</th>
                         <th>MANGKIR</th>
+                        <th>CUTI</th>
+                        <th>PRESENSI</th>
                         <th>TELAT</th>
                     </tr>
                 </thead>
@@ -104,6 +106,12 @@
         </div>
     </div>
 </main>
+<hr>
 <div id="load-script"></div>
 <div class="jumping-dots-loader"> <span></span> <span></span> <span></span> </div>
 <div class="moving-gradient"></div>
+<!-- <main class="row">
+    <h3 class="font-weight-bold">Keterangan</h3>
+    <br>
+    <h5>Hadir</h5>
+</main> -->

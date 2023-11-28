@@ -68,6 +68,7 @@ class M_kehadiran extends CI_Model
         $this->db->where('MONTH(STR_TO_DATE(tb_absen.tgl_absen, "%d-%m-%Y")) =' . $bulan );
         $this->db->where('jam_masuk','');
         $this->db->where('status_izin IS NULL');
+        $this->db->where('status_absen', '');
         $this->db->group_by('code_kar');
         $query = $this->db->get();
         $q['result'] = $query->result();
@@ -95,6 +96,32 @@ class M_kehadiran extends CI_Model
         // $this->db->where_not_in('jam_masuk','');
         // $this->db->where_not_in('jam_keluar','');
         // $this->db->group_by('code_kar');
+        $query = $this->db->get();
+        $q['result'] = $query->result();
+        $q['num_rows'] = $query->num_rows();
+        return $q;
+    }
+    function m_libur($bulan)
+    {
+        $this->db->select('COUNT(*) as jumlah, code_karyawan AS code_kar');
+        $this->db->from('tb_absen');
+        // $this->db->where_in('jam_keluar','');
+        $this->db->where('status_absen', 'libur');
+        $this->db->where('MONTH(STR_TO_DATE(tb_absen.tgl_absen, "%d-%m-%Y")) =' . $bulan);
+        $this->db->group_by('code_kar');
+        $query = $this->db->get();
+        $q['result'] = $query->result();
+        $q['num_rows'] = $query->num_rows();
+        return $q;
+    }
+    function m_cuti($bulan)
+    {
+        $this->db->select('COUNT(*) as jumlah, code_karyawan AS code_kar');
+        $this->db->from('tb_izin');
+        // $this->db->where_in('jam_keluar','');
+        $this->db->where('status_izin', 'cuti');
+        $this->db->where('MONTH(STR_TO_DATE(tb_izin.tgl_izin, "%d-%m-%Y")) =' . $bulan);
+        $this->db->group_by('code_kar');
         $query = $this->db->get();
         $q['result'] = $query->result();
         $q['num_rows'] = $query->num_rows();

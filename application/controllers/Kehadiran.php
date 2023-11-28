@@ -42,6 +42,8 @@ class Kehadiran extends CI_Controller
         $izin        = $this->M_kehadiran->m_izin($bulan);
         $mangkir        = $this->M_kehadiran->m_mangkir($bulan);
         $telat        = $this->M_kehadiran->m_telat($bulan);
+        $libur        = $this->M_kehadiran->m_libur($bulan);
+        $cuti        = $this->M_kehadiran->m_cuti($bulan);
         $no = 1;
         echo $bulan;
 
@@ -57,14 +59,10 @@ class Kehadiran extends CI_Controller
                     echo '     <th>' . $no++ . '</th>';
                     echo '     <th>' . $rows->nama . '</th>';
 
-                    // foreach ($data['hadir'] as $hdr) {
-                    //     if ($rows->code_karyawan == $hdr->code_kar) {
-                    //         echo '     <td>' . $hdr->jumlah . '</td>';
-                    //     }
-                    // }
+                    // HADIR
                     echo '<td class="text-center">';
                     $num_rows_mangkir = $mangkir['num_rows'];
-                    $jumlah_mangkir='0';
+                    $jumlah_mangkir = '0';
                     if ($num_rows_mangkir > 0) {
 
                         foreach ($mangkir['result'] as $data_mangkir) {
@@ -73,26 +71,61 @@ class Kehadiran extends CI_Controller
                             }
                         }
                     }
+                    $num_rows_libur = $libur['num_rows'];
+                    $jumlah_libur = '0';
+                    if ($num_rows_libur > 0) {
+
+                        foreach ($libur['result'] as $data_libur) {
+                            if ($rows->code_karyawan == $data_libur->code_kar) {
+                                $jumlah_libur = $data_libur->jumlah;
+                            }
+                        }
+                    }
+                    $num_rows_izin = $izin['num_rows'];
+                    $jumlah_izin = '0';
+                    if ($num_rows_izin > 0) {
+
+                        foreach ($izin['result'] as $data_izin) {
+                            if ($rows->code_karyawan == $data_izin->code_kar) {
+                                $jumlah_izin = $data_izin->jumlah;
+                            }
+                        }
+                    }
+                    $num_rows_cuti = $cuti['num_rows'];
+                    $jumlah_cuti = '0';
+                    if ($num_rows_cuti > 0) {
+
+                        foreach ($cuti['result'] as $data_cuti) {
+                            if ($rows->code_karyawan == $data_cuti->code_kar) {
+                                $jumlah_cuti = $data_cuti->jumlah;
+                            }
+                        }
+                    }
                     $num_rows_hadir = $hadir['num_rows'];
                     if ($num_rows_hadir > 0) {
                         foreach ($hadir['result'] as $data_hadir) {
                             if ($rows->code_karyawan == $data_hadir->code_kar) {
-                                echo ($data_hadir->jumlah -= $jumlah_mangkir);
+                                $total_hadir = $data_hadir->jumlah - $jumlah_mangkir - $jumlah_izin - $jumlah_cuti;
+                                echo $total_hadir -= $jumlah_libur;
                             }
                         }
                     }
                     echo '</td>';
-                    echo '<td class="text-center">';
-                    $num_rows_luarkota = $luar_kota['num_rows'];
-                    if ($num_rows_luarkota > 0) {
 
-                        foreach ($luar_kota['result'] as $data_luarkota) {
-                            if ($rows->code_karyawan == $data_luarkota->code_kar) {
-                                echo  $data_luarkota->jumlah . '</td>';
-                            }
-                        }
-                    }
-                    echo '</td>';
+                    // LUAR KOTA
+                    // echo '<td class="text-center">';
+                    // $num_rows_luarkota = $luar_kota['num_rows'];
+                    // if ($num_rows_luarkota > 0) {
+
+                    //     foreach ($luar_kota['result'] as $data_luarkota) {
+                    //         if ($rows->code_karyawan == $data_luarkota->code_kar) {
+                    //             echo  $data_luarkota->jumlah . '</td>';
+                    //         }
+                    //     }
+                    // }
+                    // echo '</td>';
+
+                    // IZIN
                     echo '<td class="text-center">';
 
                     $num_rows_izin = $izin['num_rows'];
@@ -105,6 +138,8 @@ class Kehadiran extends CI_Controller
                         }
                     }
                     echo '</td>';
+
+                    // MANGKIR
                     echo '<td class="text-center">';
 
                     $num_rows_mangkir = $mangkir['num_rows'];
@@ -118,6 +153,42 @@ class Kehadiran extends CI_Controller
                     }
                     echo '</td>';
 
+                    // CUTI
+                    echo '<td class="text-center">';
+
+                    $num_rows_cuti = $cuti['num_rows'];
+                    if ($num_rows_cuti > 0) {
+
+                        foreach ($cuti['result'] as $data_cuti) {
+                            if ($rows->code_karyawan == $data_cuti->code_kar) {
+                                echo $data_cuti->jumlah;
+                            }
+                        }
+                    }
+                    echo '</td>';
+                    // PRESENSI
+                    echo '<td class="text-center">';
+                    $jumlah_mangkir = '0';
+                    if ($num_rows_mangkir > 0) {
+
+                        foreach ($mangkir['result'] as $data_mangkir) {
+                            if ($rows->code_karyawan == $data_mangkir->code_kar) {
+                                $jumlah_mangkir = $data_mangkir->jumlah;
+                            }
+                        }
+                    }
+                    $num_rows_hadir = $hadir['num_rows'];
+                    if ($num_rows_hadir > 0) {
+                        foreach ($hadir['result'] as $data_hadir) {
+                            if ($rows->code_karyawan == $data_hadir->code_kar) {
+                                $total_hadir = $data_hadir->jumlah -= $jumlah_mangkir;
+                                echo $total_hadir;
+                            }
+                        }
+                    }
+                    echo '</td>';
+
+                    // TOTAL TELAT
                     $num_rows_telat = $telat['num_rows'];
 
                     if ($num_rows_telat > 0) {

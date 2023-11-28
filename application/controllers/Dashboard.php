@@ -152,6 +152,10 @@ class Dashboard extends CI_Controller
                     echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
                 } else if ($rows->status_izin == 'luar kota') {
                     echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
+                } else if ($rows->status_izin == 'cuti') {
+                    echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-cuti").text("Cuti");';
+                } else if ($rows->status_izin == 'lapangan') {
+                    echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir").text("Lapangan");';
                 } else if ($rows->status_izin == 'telat') {
                     echo '$("#data-' . $rows->code . '-' . ltrim($izin[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
                 } else if ($rows->status_izin == is_null('')) {
@@ -162,28 +166,26 @@ class Dashboard extends CI_Controller
                         if ($rows->hari_kerja == '5') {
                             echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-libur ").text("");';
                         } else {
-                            if($rows->dept=='founder'){
-
-                            }else{
+                            if ($rows->dept == 'founder') {
+                            } else {
                                 if ($rows->status_absen == 'libur') {
-    
+
                                     echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("").attr("data-id-absen","' . $rows->id_absen . '");';
                                 } else {
-    
+
                                     echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("MANGKIR").attr("data-id-absen","' . $rows->id_absen . '");';
                                 }
                             }
                         }
                     } else {
-                        if($rows->dept=='founder'){
-
-                        }else{
+                        if ($rows->dept == 'founder') {
+                        } else {
 
                             if ($rows->status_absen == 'libur') {
-    
+
                                 echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("").attr("data-id-absen","' . $rows->id_absen . '").attr("data-status-absen","' . $rows->status_absen . '");';
                             } else {
-    
+
                                 echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("MANGKIR").attr("data-id-absen","' . $rows->id_absen . '").attr("data-status-absen","' . $rows->status_absen . '");';
                             }
                         }
@@ -197,6 +199,10 @@ class Dashboard extends CI_Controller
                         echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-izin text-light").text("IZIN");';
                     } else if ($rows->status_izin == 'luar kota') {
                         echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-luar-kota ").text("LUAR KOTA");';
+                    } else if ($rows->status_izin == 'cuti') {
+                        echo '$("#data-' . $rows->code . '-' . ltrim($absen[0], "0") . '").addClass("td-cuti ").text("Cuti");';
+                    } else if ($rows->status_izin == 'lapangan') {
+                        echo '$("#data-' . $rows->code . '-' . ltrim($absen[0], "0") . '").addClass("td-hadir").text("Lapangan");';
                     } else if ($rows->status_izin == 'telat') {
                         echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-hadir ").html("08:00<br>' . $rows->jam_keluar . '");';
                     } else {
@@ -251,10 +257,11 @@ class Dashboard extends CI_Controller
         })';
         echo '</script>';
     }
-    function update_status_absen(){
+    function update_status_absen()
+    {
         $id_absen = $this->input->post('id-absen');
         $status_absen = $this->input->post('status-absen');
-        $update = $this->M_dashboard->m_update_status_absen($id_absen,$status_absen);
+        $update = $this->M_dashboard->m_update_status_absen($id_absen, $status_absen);
         echo json_encode($update);
     }
 }

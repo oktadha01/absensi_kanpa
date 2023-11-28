@@ -29,6 +29,12 @@
         border: 1px solid white;
     }
 
+    .td-cuti {
+        background: #03A9F4;
+        border: 1px solid white;
+        color: white;
+    }
+
     .libur,
     .td-libur {
         background: darkgray;

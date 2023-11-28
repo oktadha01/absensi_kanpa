@@ -28,9 +28,10 @@
                         <select id="status-izin" class="js-states form-control">
                             <option>Pilih status</option>
                             <option value="izin">Izin</option>
-                            <option value="sakit">Sakit</option>
                             <option value="telat">Telat</option>
                             <option value="luar kota">Luar kota</option>
+                            <option value="cuti">Cuti</option>
+                            <option value="lapangan">Lapangan</option>
                         </select>
                     </div>
                 </div>
