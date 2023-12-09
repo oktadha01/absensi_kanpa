@@ -20,12 +20,15 @@ class Kehadiran extends CI_Controller
     }
     function index()
     {
+        // $bulan = 'aaaa';
         $data['tittle']          = 'Kehadiran';
         // $data['absen']        = $this->M_dashboard->m_absen();
         // $data['izin']        = $this->M_dashboard->m_izin();
         $data['content']         = 'office/kehadiran/kehadiran';
         $data['script']         = 'office/kehadiran/kehadiran_js';
         $this->load->view($this->template, $data);
+        // redirect('Kehadiran');
+
     }
 
     function data_kehadiran()

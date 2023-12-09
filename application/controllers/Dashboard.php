@@ -163,9 +163,9 @@ class Dashboard extends CI_Controller
                     $absen   = explode('-', $tgl_absen);
                     $now = new DateTime(ltrim($absen[0], "0") . '-' . $databulan[$bulan] . '-2023');
                     if ($now->format('l') == 'Saturday') {
-                        if ($rows->hari_kerja == '5') {
-                            echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-libur ").text("");';
-                        } else {
+                        // if ($rows->hari_kerja == '5') {
+                            // echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-libur").text("");';
+                        // } else {
                             if ($rows->dept == 'founder') {
                             } else {
                                 if ($rows->status_absen == 'libur') {
@@ -176,7 +176,7 @@ class Dashboard extends CI_Controller
                                     echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("MANGKIR").attr("data-id-absen","' . $rows->id_absen . '");';
                                 }
                             }
-                        }
+                        // }
                     } else {
                         if ($rows->dept == 'founder') {
                         } else {
