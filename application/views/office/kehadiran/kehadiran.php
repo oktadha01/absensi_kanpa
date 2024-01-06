@@ -62,10 +62,10 @@
     }
 </style>
 <div class="row mt-3">
-    <div class="col">
-        <label>ABSENSI BULAN</label>
+    <div class="col-6">
+        <label>BULAN</label>
         <div class="c_multiselect">
-            <select id="single-selection" name="single_selection" class="multiselect multiselect-custom">
+            <select id="single-selection" name="single_selection" class="bulan multiselect multiselect-custom">
                 <option value="1">JANUARI</option>
                 <option value="2">FEBUARI</option>
                 <option value="3">MARET</option>
@@ -80,6 +80,15 @@
                 <option value="12">DESEMBER</option>
             </select>
         </div>
+    </div>
+    <div class="col-6"><label>TAHUN</label>
+        <div class="c_multiselect">
+            <select id="single-selection" name="single_selection" class="tahun multiselect multiselect-custom">
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+            </select>
+        </div>
+
     </div>
 </div>
 <main class="row">

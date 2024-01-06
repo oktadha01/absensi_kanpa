@@ -56,21 +56,35 @@
                 </div>
             </div>
             <div class="body mb-0 mt-0">
-                <div class="c_multiselect">
-                    <select id="single-selection" name="single_selection" class="multiselect multiselect-custom filter-bulan">
-                        <option value="1">JANUARI</option>
-                        <option value="2">FEBUARI</option>
-                        <option value="3">MARET</option>
-                        <option value="4">APRIL</option>
-                        <option value="5">MEI</option>
-                        <option value="6">JUNI</option>
-                        <option value="7">JULI</option>
-                        <option value="8">AGUSTUS</option>
-                        <option value="9">SEPTEMBER</option>
-                        <option value="10">OKTOBER</option>
-                        <option value="11">NOVEMBER</option>
-                        <option value="12">DESEMBER</option>
-                    </select>
+                <div class="row">
+                    <div class="col-6">
+                        <label>BULAN</label>
+                        <div class="c_multiselect">
+                            <select id="single-selection" name="single_selection" class="bulan multiselect multiselect-custom">
+                                <option value="1">JANUARI</option>
+                                <option value="2">FEBUARI</option>
+                                <option value="3">MARET</option>
+                                <option value="4">APRIL</option>
+                                <option value="5">MEI</option>
+                                <option value="6">JUNI</option>
+                                <option value="7">JULI</option>
+                                <option value="8">AGUSTUS</option>
+                                <option value="9">SEPTEMBER</option>
+                                <option value="10">OKTOBER</option>
+                                <option value="11">NOVEMBER</option>
+                                <option value="12">DESEMBER</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6"><label>TAHUN</label>
+                        <div class="c_multiselect">
+                            <select id="single-selection" name="single_selection" class="tahun multiselect multiselect-custom">
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="body">

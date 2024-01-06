@@ -6,10 +6,10 @@
     $tgl = date("d-m-Y");
     $fillter = explode('-', $tgl);
     ?>
-    $('#single-selection').val('<?= ltrim($fillter[1], "0"); ?>');
+    $('.bulan').val('<?= ltrim($fillter[1], "0"); ?>');
     // $('.jumping-dots-loader').hide();
     // var bulan = $(this).val();
-    $('#single-selection').change(function() {
+    $('.bulan, .tahun').change(function() {
         load_data_izin();
         // var bulan = $(this).val();
         // // $('.filter-bulan').val(bulan);
@@ -74,7 +74,8 @@
 
     function load_data_izin() {
         let formData = new FormData();
-        formData.append('bulan', $('.filter-bulan').val())
+        formData.append('bulan', $('.bulan').val())
+        formData.append('tahun', $('.tahun').val())
         $.ajax({
             type: 'POST',
             url: "<?php echo site_url('Izin/load_data_izin'); ?>",

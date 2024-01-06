@@ -3,7 +3,7 @@
     $tgl = date("d-m-Y");
     $fillter = explode('-', $tgl);
     ?>
-    $('#single-selection').val('<?= ltrim($fillter[1], "0"); ?>');
+    $('.bulan').val('<?= ltrim($fillter[1], "0"); ?>');
     // $('.jumping-dots-loader').hide();
     var delayInMilliseconds = 1500; //1 second
 
@@ -13,8 +13,8 @@
         load_data_kehadiran();
     }, delayInMilliseconds);
 
-    $('#single-selection').change(function() {
-        var bulan = $(this).val();
+    $('.bulan, .tahun').change(function() {
+        // var bulan = $(this).val();
         $('.jumping-dots-loader').show();
         setTimeout(function() {
             $('.jumping-dots-loader').hide();
@@ -25,7 +25,8 @@
 
     function load_data_kehadiran() {
         let formData = new FormData();
-        formData.append('bulan', $('#single-selection').val());
+        formData.append('bulan', $('.bulan').val());
+        formData.append('tahun', $('.tahun').val());
         $.ajax({
             type: 'POST',
             url: "<?php echo site_url('Kehadiran/data_kehadiran'); ?>",

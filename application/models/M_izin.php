@@ -15,12 +15,13 @@ class M_izin extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
-    function m_data_izin($bulan)
+    function m_data_izin($bulan, $tahun)
     {
         $this->db->select('*');
         $this->db->from('karyawan');
         $this->db->join('tb_izin', 'tb_izin.code_karyawan = karyawan.code_karyawan');
         $this->db->where('MONTH(STR_TO_DATE(tb_izin.tgl_izin, "%d-%m-%Y")) =' . $bulan);
+        $this->db->where('YEAR(STR_TO_DATE(tb_izin.tgl_izin, "%d-%m-%Y")) =' . $tahun);
         $this->db->order_by('tgl_izin', 'desc');
         $this->db->order_by('id_izin', 'desc');
         $query = $this->db->get();

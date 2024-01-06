@@ -36,17 +36,18 @@ class Kehadiran extends CI_Controller
 
         // $bulan = '10';
         $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
 
         $data['dept']        = $this->M_dashboard->m_dept();
         $data['karyawan']        = $this->M_kehadiran->m_karyawan();
         // $data['absen']        = $this->M_kehadiran->m_absen();
-        $hadir        = $this->M_kehadiran->m_hadir($bulan);
-        $luar_kota        = $this->M_kehadiran->m_luar_kota($bulan);
-        $izin        = $this->M_kehadiran->m_izin($bulan);
-        $mangkir        = $this->M_kehadiran->m_mangkir($bulan);
-        $telat        = $this->M_kehadiran->m_telat($bulan);
-        $libur        = $this->M_kehadiran->m_libur($bulan);
-        $cuti        = $this->M_kehadiran->m_cuti($bulan);
+        $hadir        = $this->M_kehadiran->m_hadir($bulan, $tahun);
+        $luar_kota        = $this->M_kehadiran->m_luar_kota($bulan, $tahun);
+        $izin        = $this->M_kehadiran->m_izin($bulan, $tahun);
+        $mangkir        = $this->M_kehadiran->m_mangkir($bulan, $tahun);
+        $telat        = $this->M_kehadiran->m_telat($bulan, $tahun);
+        $libur        = $this->M_kehadiran->m_libur($bulan, $tahun);
+        $cuti        = $this->M_kehadiran->m_cuti($bulan, $tahun);
         $no = 1;
         echo $bulan;
 

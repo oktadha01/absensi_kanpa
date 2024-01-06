@@ -16,9 +16,9 @@
     $tgl = date("d-m-Y");
     $fillter = explode('-', $tgl);
     ?>
-    $('#single-selection').val('<?= ltrim($fillter[1], "0"); ?>');
-    $('#single-selection').change(function() {
-        var bulan = $(this).val();
+    $('.bulan').val('<?= ltrim($fillter[1], "0"); ?>');
+    $('.bulan, .tahun').change(function() {
+        // var bulan = $(this).val();
         // $('#single-selectios').val(bulan);
         // alert(bulan);
         var delayInMilliseconds = 1500; //1 second
@@ -32,10 +32,11 @@
             $('.jumping-dots-loader').hide();
         }, delayInMilliseconds);
     });
-    // $('#single-selection').trigger('change');
+    // $('.bulan').trigger('change');
     function load_data_absen() {
         let formData = new FormData();
-        formData.append('bulan', $('#single-selection').val());
+        formData.append('bulan', $('.bulan').val());
+        formData.append('tahun', $('.tahun').val());
         $.ajax({
             type: 'POST',
             url: "<?php echo site_url('Dashboard/data_absen'); ?>",
@@ -55,7 +56,8 @@
 
     function load_tabel_absen() {
         let formData = new FormData();
-        formData.append('bulan', $('#single-selection').val());
+        formData.append('bulan', $('.bulan').val());
+        formData.append('tahun', $('.tahun').val());
         $.ajax({
             type: 'POST',
             url: "<?php echo site_url('Dashboard/tabel_absen'); ?>",

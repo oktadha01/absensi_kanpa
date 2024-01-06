@@ -27,7 +27,8 @@ class Izin extends CI_Controller
     function load_data_izin()
     {
         $bulan = $this->input->post('bulan');
-        $data['izin']        = $this->M_izin->m_data_izin($bulan);
+        $tahun = $this->input->post('tahun');
+        $data['izin']        = $this->M_izin->m_data_izin($bulan, $tahun);
         $no = 1;
         foreach ($data['izin'] as $data) :
             echo '<tr>';

@@ -32,6 +32,7 @@ class Dashboard extends CI_Controller
         echo '        <th class="pin">NO</th>';
         echo '        <th class="pin">NAMA</th>';
         $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
         $databulan = [
             '1' => 'January',
             '2' => 'February',
@@ -49,7 +50,7 @@ class Dashboard extends CI_Controller
         $frist = date("d", strtotime("first day of " . $databulan[$bulan]));
         $last = date("d", strtotime("last day of " . $databulan[$bulan]));
         for ($x = $frist; $x <= $last; $x++) {
-            $now = new DateTime($x . '-' . $databulan[$bulan] . '-2023');
+            $now = new DateTime($x . '-' . $databulan[$bulan] . '-' . $tahun);
             if ($now->format('l') == 'Sunday') {
 
                 echo '<th id="th-' . ltrim($x, '0') . '" class="text-center" style="background: darkgray;">' . ltrim($x, '0') . '</th>';
@@ -78,7 +79,7 @@ class Dashboard extends CI_Controller
                     $frist = date("d", strtotime("first day of " . $databulan[$bulan]));
                     $last = date("d", strtotime("last day of " . $databulan[$bulan]));
                     for ($x = $frist; $x <= $last; $x++) {
-                        $now = new DateTime($x . '-' . $databulan[$bulan] . '-2023');
+                        $now = new DateTime($x . '-' . $databulan[$bulan] . '-' . $tahun);
                         if ($now->format('l') == 'Sunday') {
                             echo '<td class="text-center font-weight-bold" id="data-' . $kar->code_karyawan . '-' . ltrim($x, '0') . '"style="background: darkgray;"></td>';
                         } else {
@@ -94,6 +95,7 @@ class Dashboard extends CI_Controller
     function data_absen()
     {
         $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
 
         $data['absen']        = $this->M_dashboard->m_absen($bulan);
         // $data['izin']        = $this->M_dashboard->m_izin($bulan);
@@ -102,7 +104,7 @@ class Dashboard extends CI_Controller
         // foreach ($data['absen']  as $absn) {
 
         //     $no = 1;
-        //     // $tanggal = '1-09-2023';
+        //     // $tanggal = '1-09-'.$tahun;
         //     $tgl_absen = $absn->tgl_absen;
         //     // $tgl_izin = $absn->tgl_izin;
         //     $absen   = explode('-', $tgl_absen);
@@ -134,14 +136,14 @@ class Dashboard extends CI_Controller
         ];
 
         $izin123 = "(SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code, karyawan.code_karyawan AS code_kary, karyawan.hari_kerja, karyawan.dept 
-                    FROM tb_absen LEFT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen
-                    JOIN karyawan ON karyawan.code_karyawan = tb_absen.code_karyawan 
-                    WHERE MONTH(STR_TO_DATE(tb_absen.tgl_absen, '%d-%m-%Y')) = $bulan)
-                    UNION
-                    (SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code, karyawan.code_karyawan AS code_kary, karyawan.hari_kerja, karyawan.dept  
-                    FROM tb_absen RIGHT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen
-                    JOIN karyawan ON karyawan.code_karyawan = tb_izin.code_karyawan 
-                    WHERE MONTH(STR_TO_DATE(tb_izin.tgl_izin, '%d-%m-%Y')) = $bulan)";
+        FROM tb_absen LEFT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen
+        JOIN karyawan ON karyawan.code_karyawan = tb_absen.code_karyawan 
+        WHERE MONTH(STR_TO_DATE(tb_absen.tgl_absen, '%d-%m-%Y')) = $bulan AND YEAR(STR_TO_DATE(tb_absen.tgl_absen, '%d-%m-%Y'))= $tahun)
+        UNION
+        (SELECT tb_absen.*, tb_izin.*, tb_absen.code_karyawan as code_kar_absen,tb_izin.code_karyawan as code, karyawan.code_karyawan AS code_kary, karyawan.hari_kerja, karyawan.dept  
+        FROM tb_absen RIGHT JOIN tb_izin ON tb_absen.code_karyawan = tb_izin.code_karyawan AND tb_izin.tgl_izin = tb_absen.tgl_absen
+        JOIN karyawan ON karyawan.code_karyawan = tb_izin.code_karyawan 
+        WHERE MONTH(STR_TO_DATE(tb_izin.tgl_izin, '%d-%m-%Y')) = $bulan  AND YEAR(STR_TO_DATE(tb_izin.tgl_izin, '%d-%m-%Y'))= $tahun)";
         $query = $this->db->query($izin123);
         foreach ($query->result() as $rows) {
             if ($rows->jam_masuk == '') {
@@ -161,21 +163,21 @@ class Dashboard extends CI_Controller
                 } else if ($rows->status_izin == is_null('')) {
                     $tgl_absen = $rows->tgl_absen;
                     $absen   = explode('-', $tgl_absen);
-                    $now = new DateTime(ltrim($absen[0], "0") . '-' . $databulan[$bulan] . '-2023');
+                    $now = new DateTime(ltrim($absen[0], "0") . '-' . $databulan[$bulan] . '-' . $tahun);
                     if ($now->format('l') == 'Saturday') {
                         // if ($rows->hari_kerja == '5') {
-                            // echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-libur").text("");';
+                        // echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-libur").text("");';
                         // } else {
-                            if ($rows->dept == 'founder') {
+                        if ($rows->dept == 'founder') {
+                        } else {
+                            if ($rows->status_absen == 'libur') {
+
+                                echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("").attr("data-id-absen","' . $rows->id_absen . '");';
                             } else {
-                                if ($rows->status_absen == 'libur') {
 
-                                    echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("").attr("data-id-absen","' . $rows->id_absen . '");';
-                                } else {
-
-                                    echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("MANGKIR").attr("data-id-absen","' . $rows->id_absen . '");';
-                                }
+                                echo '$("#data-' . $rows->code_kar_absen . '-' . ltrim($absen[0], "0") . '").addClass("td-mangkir tb-absen ' . $rows->status_absen . '").text("MANGKIR").attr("data-id-absen","' . $rows->id_absen . '");';
                             }
+                        }
                         // }
                     } else {
                         if ($rows->dept == 'founder') {
